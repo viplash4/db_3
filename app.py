@@ -6,15 +6,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://cbyyswcgfjhlvl:e4dfc22b18d
 #app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
-class State(db.Model):
-	__tablename__ = 'State'
-	city_name = db.Column(db.String(255), unique=True, nullable=False, primary_key=True)
-	author = db.Column(db.String(255), nullable=False)
-	state = db.relationship('Weather', cascade = 'all, save-update, delete, delete-orphan')
 
-	def __init__(self, city_name, author):
-		self.city_name = city_name
-		self.author = author
 
 
 class Weather(db.Model):
@@ -30,6 +22,7 @@ class Weather(db.Model):
 		self.date = date
 		self.temp = temp
 		self.Raindrop = Raindrop
+
 
 db.create_all()
 
