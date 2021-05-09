@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 class Weather(db.Model):
 	record_id = db.Column(db.Integer, primary_key=True)
-	City_name = db.Column(db.String(255), db.ForeignKey('State.city_name'))
+	City_name = db.Column(db.String(255), nullable=False)
 	date = db.Column(db.String(255),nullable=False)
 	temp = db.Column(db.Float, nullable=False)
 	Raindrop = db.Column(db.Float, nullable=False)
