@@ -34,9 +34,9 @@ db.session.commit()
 @app.route('/')
 def Index():
     data = Weather.query.all()
-    data_state = State.query.all()
+  
  
-    return render_template("index.html", report = data, state=data_state)
+    return render_template("index.html", report = data)
 
 @app.route('/insert', methods = ['POST'])
 def insert():
