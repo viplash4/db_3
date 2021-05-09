@@ -23,7 +23,7 @@ class Weather(db.Model):
 		self.temp = temp
 		self.Raindrop = Raindrop
 
-db.drop_all()
+
 db.create_all()
 
 
