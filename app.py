@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, request, send_from_directory,
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_url_path='')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cbyyswcgfjhlvl:e4dfc22b18de91f25d8a0ddf1aa819e6816ed39b874de35d41d6435fcaaed3a3@ec2-63-34-97-163.eu-west-1.compute.amazonaws.com:5432/d8092kcb5uv4e'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://cbyyswcgfjhlvl:e4dfc22b18de91f25d8a0ddf1aa819e6816ed39b874de35d41d6435fcaaed3a3@ec2-63-34-97-163.eu-west-1.compute.amazonaws.com:5432/d8092kcb5uv4e'
 #app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
