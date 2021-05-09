@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>welcome!!!</title>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+                    </div>  
+                    </nav>
+    
+    <div class="container">
+
+        <div class="row">
+            <div class="col md-12">
+              <div class="jumbotron p-3">
+                <h2>Manage <b>Records </b>  <button type="button"  class="btn btn-success float-right"
+                    data-toggle="modal" data-target="#mymodal">Add New Record</button> </h2>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+
+                    {% for message in messages %}
+                    <div class="alert alert-success alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    {{message}}
+                    </div>
+
+
+                    {% endfor %}
+
+                    {% endif %}
+                    {% endwith %}
+                    
+                    <table class="table table-hover" >
+                        <tr>
+
+                            <th>record_id</th>
+                            <th>City_name</th>
+                            <th>date</th>
+                            <th>temp</th>
+                            <th>Raindrop</th>
+
+                        </tr>
+
+
+                       {% for row in report %}
+                        <tr>
+                            <td>{{row.record_id}}</td>
+                            <td>{{row.City_name}}</td>
+                            <td>{{row.date}}</td>
+                            <td>{{row.temp}}</td>
+                            <td>{{row.Raindrop}}</td>
+
+                            <td>
+                                <a href="/update/{{row.record_id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.record_id}}">Edit</a>
+                                <a href="/delete/{{row.record_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure???')">Delete</a>
+                            </td>
+                        </tr>
+
+                      <div id="modaledit{{row.record_id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Information</h4>
+                            </div>
+                          <div class="modal-body">
+                          <form action="{{url_for('update')}}" method="POST">
+                            <div class="form-group">
+                              <label>record_id:</label>
+                              <input type="hidden"  name="id" value="{{row.record_id}}">
+
+                              <input type="text" class="form-control" name="record_id" value="{{row.record_id}}">
+                            </div>
+                            
+                            <div class="form-group">
+                              <label>City_name:</label>
+                              <input type="text" class="form-control" name="City_name" value="{{row.City_name}}">
+                            </div>
+                            
+                            <div class="form-group">
+                              <label>date:</label>
+                              <input type="text" class="form-control" name="date" value="{{row.date}}">
+                            </div>
+
+                            <div class="form-group">
+                              <label>temp:</label>
+                              <input type="text" class="form-control" name="temp" value="{{row.temp}}">
+                            </div>
+                            
+                            <div class="form-group">
+                              <label>Raindrop:</label>
+                              <input type="text" class="form-control" name="Raindrop" value="{{row.Raindrop}}">
+                            </div>
+
+                            <div class="form-group">
+                              <button class="btn btn-primary" type="submit">Update</button>
+                            </div>
+                            </form>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </table>
+                </div>
+                <div id="mymodal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+ 
+                      <h4 class="modal-title">Add Record</h4>
+                      </div>
+                      <div class="modal-body">
+ 
+                      <form action="{{url_for('insert')}}" method="POST">
+                      <div class="form-group">
+                      <label>record_id:</label>
+                      <input type="number" class="form-control" name="record_id" required="1">
+                      </div>
+                      <div class="form-group">
+                      <label>City_name:</label>
+                      <input type="text" class="form-control" name="City_name" required="1">
+                      </div>
+                      <div class="form-group">
+                      <label>date:</label>
+                      <input type="text" class="form-control" name="date" required="1">
+                      </div>
+                      <div class="form-group">
+                      <label>temp:</label>
+                      <input type="number" class="form-control" name="temp" required="1">
+                      </div>
+                      <div class="form-group">
+                      <label>Raindrop:</label>
+                      <input type="number" class="form-control" name="Raindrop" required="1">
+                      </div>
+ 
+              
+ 
+ 
+ 
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Add Record</button>
+ 
+ 
+               </div>
+ 
+ 
+            </form>
+ 
+ 
+         </div>
+ 
+ 
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+ 
+   </div>
+</div>
+
+
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
